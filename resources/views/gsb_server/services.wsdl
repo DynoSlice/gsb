@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions name="gsb_server" 
+    xmlns:SOAP-ENV="http://schemas.xmlsoap.org/soap/envelope/" 
+    xmlns:SOAP-ENC="http://schemas.xmlsoap.org/soap/encoding/" 
+    xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+    xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+    xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" 
+    xmlns="http://schemas.xmlsoap.org/wsdl/" targetNamespace="urn:gsb_server" 
+    xmlns:tns="urn:gsb_server">    <!-- prototype des types utilisés -->
+    <types>
+        <xsd:schema targetNamespace="urn:gsb_server">
+            <xsd:import namespace="http://schemas.xmlsoap.org/soap/encoding/" />
+            <xsd:import namespace="http://schemas.xmlsoap.org/wsdl/" />		
+		</xsd:schema> 
+  </types>
+
+    <!-- prototype des messages echangés -->
+
+    <message name="Donne_liste_fraisRequest">
+        <part name="Telephone" type="xsd:Array[]" />
+    </message>
+    <message name="Donne_liste_fraisResponse">
+        <part name="return" type="xsd:Array[]" />
+    </message>
+
+    <message name="Donne_info_userRequest"> 
+       <part name="Nom" type="xsd:Array[]" /> 
+    </message>
+     <message name="Donne_info_userResponse"> 
+         <part name="return" type="xsd:Array[]" /> 
+    </message>
+
+    <message name="Donne_article_userRequest"> 
+       <part name="Nom" type="xsd:Array[]" /> 
+    </message>
+     <message name="Donne_article_userResponse"> 
+         <part name="return" type="xsd:Array[]" /> 
+    </message>
+
+
+    <!-- association des méthodes avec les transactions -->
+    <portType name="PortTypegsb_server">      
+        <operation name="Donne_liste_frais">
+            <wsdl:input message="tns:Donne_liste_fraisRequest"/>
+            <wsdl:output message="tns:Donne_liste_fraisResponse"/>
+        </operation>
+
+          <operation name="Donne_info_user"> -->
+            <wsdl:input message="tns:Donne_info_userRequest"/> 
+            <wsdl:output message="tns:Donne_info_userResponse"/> 
+        </operation>
+
+        <operation name="Donne_article_user"> -->
+            <wsdl:input message="tns:Donne_article_userRequest"/> 
+            <wsdl:output message="tns:Donne_article_userResponse"/> 
+        </operation>
+    </portType>    <!-- definition de l'encodage du transport de la transaction -->
+
+    <binding name="Bindgsb_server" type="tns:PortTypegsb_server">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <operation name="Donne_liste_frais">
+            <soap:operation soapAction="urn:gsb_serverB#SoapDonne_liste_frais" style="rpc"/>
+            <input>
+                <soap:body use="encoded" namespace="urn:gsb_server" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </input>
+            <output>
+                <soap:body use="encoded" namespace="urn:gsb_server" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output>
+        </operation>
+
+         <operation name="Donne_info_user"> 
+            <soap:operation soapAction="urn:gsb_server#SoapDonne_info_user" style="rpc"/> 
+            <input>
+                <soap:body use="encoded" namespace="urn:gsb_server" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/> 
+            </input> 
+            <output> 
+                <soap:body use="encoded" namespace="urn:gsb_server" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output> 
+         </operation> 
+
+         <operation name="Donne_article_user"> 
+            <soap:operation soapAction="urn:gsb_server#SoapDonne_article_user" style="rpc"/> 
+            <input>
+                <soap:body use="encoded" namespace="urn:gsb_server" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/> 
+            </input> 
+            <output> 
+                <soap:body use="encoded" namespace="urn:gsb_server" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/"/>
+            </output> 
+         </operation> 
+
+    </binding>
+    <service name="Servicegsb_server">
+        <port name="PortServicegsb_server" binding="tns:Bindgsb_server">
+            <soap:address location="http://127.0.0.1/gsb/resources/views/gsb_server/serveur.php" />
+        </port>
+    </service>
+</definitions>
